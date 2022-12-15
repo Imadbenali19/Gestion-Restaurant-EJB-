@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 
 import ma.entites.Specialite;
+import ma.entites.Ville;
 
 @Stateless(name="specialite")
 public class SpecialiteEJBImpl implements SpecialiteLocal,SpecialiteRemote {
@@ -48,9 +49,8 @@ public class SpecialiteEJBImpl implements SpecialiteLocal,SpecialiteRemote {
 
 	@Override
 	public Specialite getSpecialite(String nom) {
-		Specialite s = em.find(Specialite.class, nom);
-		if (s == null)
-			throw new RuntimeException("Specialite introvable");
-		return s;
+		Query query = em.createQuery("select s from Specialite s where s.nom=?1",Specialite.class);
+		query.setParameter(1, nom);
+		return (Specialite) query.getSingleResult();
 	}
 }

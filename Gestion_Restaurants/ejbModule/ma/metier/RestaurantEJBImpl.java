@@ -57,10 +57,9 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 
 	@Override
 	public Restaurant getRestau(String nom) {
-		Restaurant r = em.find(Restaurant.class, nom);
-		if (r == null)
-			throw new RuntimeException("restau introvable");
-		return r;
+		Query query = em.createQuery("select r from Restaurant r where r.nom=?1",Restaurant.class);
+		query.setParameter(1, nom);
+		return (Restaurant) query.getSingleResult();
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class ZoneController extends HttpServlet {
      */
 	@EJB
 	private ZoneLocal service;
+	@EJB
 	private VilleLocal serviceVille;
 	
     public ZoneController() {

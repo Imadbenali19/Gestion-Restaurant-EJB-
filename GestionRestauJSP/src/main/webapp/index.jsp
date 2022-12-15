@@ -105,6 +105,53 @@
 								</div>
 
 							</div>
+							<div class="form-group row">
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<label for="serie">Serie(Nom)</label> <select id="serie"
+										name="serie" class=" custom-select"
+										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
+
+									</select>
+
+								</div>
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<label for="zone">Zone(Nom)</label> <select id="zone"
+										name="serie" class=" custom-select"
+										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
+
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-12 mb-3 mb-sm-0">
+									<!-- <label for="specialite">Specialite(Nom)</label> <select
+										id="specialite" name="specialite" multiple
+										class=" custom-select"
+										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
+										<option value="volvo">Volvo</option>
+										<option value="saab">Saab</option>
+										<option value="opel">Opel</option>
+									</select> -->
+
+									<label> Multi-select <input mbsc-input id="my-input"
+										data-dropdown="true" data-tags="true" />
+									</label> <select id="multiple-select" multiple>
+										<option value="1">Books</option>
+										<option value="2">Movies, Music & Games</option>
+										<option value="3">Electronics & Computers</option>
+										<option value="4">Home, Garden & Tools</option>
+										<option value="5">Health & Beauty</option>
+										<option value="6">Toys, Kids & Baby</option>
+										<option value="7">Clothing & Jewelry</option>
+										<option value="8">Sports & Outdoors</option>
+									</select>
+<script>mobiscroll.select('#multiple-select', {
+    inputElement: document.getElementById('my-input'),
+    touchUi: false
+});</script>
+								</div>
+
+							</div>
 
 
 							<!-- <input type="submit" class="btn btn-info btn-user btn-block" value="Add" id="add" onclick="valid()">-->
@@ -169,7 +216,7 @@
 										</tr>
 									</tfoot>
 									<tbody id="yes">
-									<%-- <%
+										<%-- <%
 									 	
 										RestaurantLocal service;
 										List<Restaurant> res=service.getAllRestau();
@@ -223,7 +270,7 @@
 		<%-- <script
 			src="<%=request.getContextPath()%>/validationsJS/validation3.js"></script>--%>
 		<script src="<%=request.getContextPath()%>/Scripts/Restau.js"></script>
-		
+
 
 
 		<!-- <script type="text/javascript">

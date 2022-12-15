@@ -47,17 +47,15 @@
 									<select id="ville" name="ville" class=" custom-select" style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
 										
 										
-										 <%-- <%
+										<%--  <%
 										 
-										 
-										 	
 						                   
 						               %>
-										<option value="<%=remote.getVille("Marrakech").getNom()%>"><%=remote.getVille("Marrakech").getNom()%></option>
+										<option value="<%=service.getAllVilles()%>"><%=service.getVille("Marrakech").getNom()%></option>
             
-             							<%%> --%>
+             							<%%>  --%>
 									</select>
-									<input type="text" id="hoo" name="hoo">
+									
 								</div>
 								
 							</div>

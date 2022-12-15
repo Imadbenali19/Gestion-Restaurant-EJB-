@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import ma.entites.Restaurant;
 import ma.entites.Serie;
+import ma.entites.Ville;
 
 @Stateless(name = "serie")
 public class SerieEJBImpl implements SerieLocal, SerieRemote {
@@ -46,10 +47,9 @@ public class SerieEJBImpl implements SerieLocal, SerieRemote {
 
 	@Override
 	public Serie getSerie(String nom) {
-		Serie s = em.find(Serie.class, nom);
-		if (s == null)
-			throw new RuntimeException("Serie introvable");
-		return s;
+		Query query = em.createQuery("select s from Serie s where s.nom=?1",Serie.class);
+		query.setParameter(1, nom);
+		return (Serie) query.getSingleResult();
 	}
 
 }

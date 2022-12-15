@@ -4,9 +4,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
+import ma.entites.Ville;
 import ma.entites.Zone;
 
 @Stateless(name="zone")
@@ -46,10 +45,9 @@ public class ZoneEJBRemote implements ZoneLocal,ZoneRemote {
 
 	@Override
 	public Zone getZone(String nom) {
-		Zone s = em.find(Zone.class, nom);
-		if (s == null)
-			throw new RuntimeException("Zone introvable");
-		return s;
+		Query query = em.createQuery("select z from Zone z where z.nom=?1",Zone.class);
+		query.setParameter(1, nom);
+		return (Zone) query.getSingleResult();
 	}
 
 	

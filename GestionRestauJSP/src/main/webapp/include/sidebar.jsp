@@ -71,13 +71,13 @@ if(session.getAttribute("login")!=null){
 	<hr class="sidebar-divider">
 
 	<!-- Heading -->
-	<div class="sidebar-heading">Opérations supplémentaires</div>
+	<!-- <div class="sidebar-heading">Opérations supplémentaires</div> -->
 
 	<!-- Nav Item - Pages Collapse Menu -->
 	<!-- Nav Item  -->
 
 
-	<li class="nav-item"><a class="nav-link" href="#"
+	<!-- <li class="nav-item"><a class="nav-link" href="#"
 		data-toggle="collapse" data-target="#collapseTwo"
 		aria-expanded="false" aria-controls="collapseTwo"> <i
 			class="fas fa-search"></i> <span>Chercher</span>
@@ -90,13 +90,13 @@ if(session.getAttribute("login")!=null){
 					dates</a> <a class="collapse-item" href="searchAdmin2.jsp">Machines
 					par salle</a>
 			</div>
-		</div></li>
+		</div></li> -->
 
 
 	<!-- Nav Item - Charts -->
-	<li class="nav-item"><a class="nav-link" href="chartsAdmin.jsp">
+	<!-- <li class="nav-item"><a class="nav-link" href="chartsAdmin.jsp">
 			<i class="fas fa-fw fa-chart-bar"></i> <span>Statistiques</span>
-	</a></li>
+	</a></li> -->
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">

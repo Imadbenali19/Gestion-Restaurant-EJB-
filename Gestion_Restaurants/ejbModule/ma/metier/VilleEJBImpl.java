@@ -43,12 +43,22 @@ public class VilleEJBImpl implements VilleLocal, VilleRemote {
 		return query.getResultList();
 	}
 
+	
+
+//	@Override
+//	public Ville getVille(Long id) {
+//		Ville s = em.find(Ville.class, id);
+//		
+//		if (s == null)
+//			throw new RuntimeException("Ville introvable");
+//		return s;
+//	}
+
 	@Override
 	public Ville getVille(String nom) {
-		Ville s = em.find(Ville.class, nom);
-		if (s == null)
-			throw new RuntimeException("Ville introvable");
-		return s;
+		Query query = em.createQuery("select v from Ville v where v.nom=?1",Ville.class);
+		query.setParameter(1, nom);
+		return (Ville) query.getSingleResult();
 	}
 
 }
