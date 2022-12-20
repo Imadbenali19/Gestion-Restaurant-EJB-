@@ -31,13 +31,13 @@ public class Restaurant implements Serializable {
 	private boolean weekend;
 	private int rank;
 	
-	/*@OneToMany(fetch = FetchType.EAGER)
-	private List<Photo> photos;*/
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Photo> photos;
 	
 	@ManyToOne
 	private Zone zone;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Specialite> specialites;
 	
 	@ManyToOne
@@ -62,19 +62,19 @@ public class Restaurant implements Serializable {
 		this.date_close = date_close;
 		this.weekend = weekend;
 		this.rank = rank;
-		//this.photos = photos;
+		this.photos = photos;
 		this.zone = zone;
 		this.specialites = specialites;
 		this.serie = serie;
 	}
 
-	/*public List<Photo> getPhotos() {
+	public List<Photo> getPhotos() {
 		return photos;
 	}
 
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
-	}*/
+	}
 
 	public Zone getZone() {
 		return zone;
