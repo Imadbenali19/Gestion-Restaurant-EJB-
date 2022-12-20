@@ -2,6 +2,7 @@ package ma.metier;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +18,9 @@ public class SerieEJBImpl implements SerieLocal, SerieRemote {
 	@PersistenceContext
 	private EntityManager em;
 
+	@EJB
+	RestaurantLocal service;
+	
 	@Override
 	public boolean addSerie(Serie s) {
 		em.persist(s);
@@ -25,8 +29,14 @@ public class SerieEJBImpl implements SerieLocal, SerieRemote {
 
 	@Override
 	public boolean delSerie(Long sId) {
+		List<Restaurant> r=service.getAllRestau();
+		for(Restaurant x: r) {
+			if(x.getSerie().getId()==sId) {
+				x.setSerie(null);
+			}
+		}
 		em.remove(em.find(Serie.class, sId));
-		return false;
+		return true;
 	}
 
 	@Override
@@ -51,5 +61,15 @@ public class SerieEJBImpl implements SerieLocal, SerieRemote {
 		query.setParameter(1, nom);
 		return (Serie) query.getSingleResult();
 	}
+
+	@Override
+	public Serie findById(Long id) {
+		Serie cm = em.find(Serie.class, id);
+		if (cm == null)
+			throw new RuntimeException("Serie introvable");
+		return cm;
+	}
+
+	
 
 }

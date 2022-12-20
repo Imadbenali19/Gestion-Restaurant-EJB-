@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import ma.entites.Photo;
 import ma.entites.Restaurant;
 import ma.entites.Serie;
 import ma.entites.Specialite;
@@ -25,8 +26,10 @@ public interface RestaurantRemote {
 	List<Restaurant> getAllRestau();
 
 	Restaurant getRestau(String nom);
+	
+	Restaurant findById(Long id);
 
-	boolean addPhotoToRestau(Long rId);
+	boolean addPhotoToRestau(Long rId,List<Photo> photos);
 
 	boolean delPhotoFromRestau(Long rId, Long pId);
 

@@ -3,14 +3,17 @@ package ma.entites;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
 @Entity
 public class Restaurant implements Serializable {
@@ -19,7 +22,7 @@ public class Restaurant implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nom;
-	private String adress;
+	private String adresse;
 	private double lat ;
 	private double lon ;
 	private String description;
@@ -28,18 +31,17 @@ public class Restaurant implements Serializable {
 	private boolean weekend;
 	private int rank;
 	
-	/*@OneToMany(fetch = FetchType.LAZY)
-	private List<Photo> photos;
+	/*@OneToMany(fetch = FetchType.EAGER)
+	private List<Photo> photos;*/
 	
 	@ManyToOne
 	private Zone zone;
 	
-	@ManyToMany
-	
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Specialite> specialites;
 	
 	@ManyToOne
-	private Serie serie;*/
+	private Serie serie;
 	
 	
 	
@@ -47,12 +49,12 @@ public class Restaurant implements Serializable {
 		super();
 	}
 
-	public Restaurant(String nom, String adress, double lat, double lon, String description, String date_open,
+	public Restaurant(String nom, String adresse, double lat, double lon, String description, String date_open,
 			String date_close, boolean weekend, int rank, List<Photo> photos, Zone zone, List<Specialite> specialites,
 			Serie serie) {
 		super();
 		this.nom=nom;
-		this.adress = adress;
+		this.adresse = adresse;
 		this.lat = lat;
 		this.lon = lon;
 		this.description = description;
@@ -60,10 +62,10 @@ public class Restaurant implements Serializable {
 		this.date_close = date_close;
 		this.weekend = weekend;
 		this.rank = rank;
-		/*this.photos = photos;
+		//this.photos = photos;
 		this.zone = zone;
 		this.specialites = specialites;
-		this.serie = serie;*/
+		this.serie = serie;
 	}
 
 	/*public List<Photo> getPhotos() {
@@ -72,7 +74,7 @@ public class Restaurant implements Serializable {
 
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
-	}
+	}*/
 
 	public Zone getZone() {
 		return zone;
@@ -81,7 +83,7 @@ public class Restaurant implements Serializable {
 	public void setZone(Zone zone) {
 		this.zone = zone;
 	}
-
+	
 	public List<Specialite> getSpecialites() {
 		return specialites;
 	}
@@ -96,7 +98,7 @@ public class Restaurant implements Serializable {
 
 	public void setSerie(Serie serie) {
 		this.serie = serie;
-	}*/
+	}
 
 	public Long getId() {
 		return id;
@@ -106,12 +108,12 @@ public class Restaurant implements Serializable {
 		this.id = id;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getAdresse() {
+		return adresse;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
 	public double getLat() {
@@ -178,9 +180,13 @@ public class Restaurant implements Serializable {
 		this.nom = nom;
 	}
 
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "Restaurant [id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", lat=" + lat + ", lon=" + lon
+				+ ", description=" + description + ", date_open=" + date_open + ", date_close=" + date_close
+				+ ", weekend=" + weekend + ", rank=" + rank + ", zone=" + zone + ", specialites=" + specialites
+				+ ", serie=" + serie + "]";
+	}
 
+	
 }

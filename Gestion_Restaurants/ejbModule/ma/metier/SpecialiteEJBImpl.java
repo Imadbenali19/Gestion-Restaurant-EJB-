@@ -28,7 +28,7 @@ public class SpecialiteEJBImpl implements SpecialiteLocal,SpecialiteRemote {
 	@Override
 	public boolean delSpecialite(Long sId) {
 		em.remove(em.find(Specialite.class, sId));
-		return false;
+		return true;
 	}
 
 	@Override
@@ -52,5 +52,13 @@ public class SpecialiteEJBImpl implements SpecialiteLocal,SpecialiteRemote {
 		Query query = em.createQuery("select s from Specialite s where s.nom=?1",Specialite.class);
 		query.setParameter(1, nom);
 		return (Specialite) query.getSingleResult();
+	}
+
+	@Override
+	public Specialite findById(Long id) {
+		Specialite cm = em.find(Specialite.class, id);
+		if (cm == null)
+			throw new RuntimeException("Specialite introvable");
+		return cm;
 	}
 }

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$.ajax({
-		url: 'VilleController',
+		url: 'SpecialiteController',
 		data: { op: "load" },
 		type: 'POST',
 		success: function(data) {
@@ -15,10 +15,11 @@ $(document).ready(function() {
 	function remplir(data) {
 		var ligne = "";
 		data.forEach(e => {
-			$("#ville").append("<option value='" + e.nom + "'>" + e.nom + "</option>");
+			$("#specialite").append("<option value='" + e.nom + "'>" + e.nom + "</option>");
 		});
+		
 		//alert(ligne);		
 		//swal("Good job!", "User added successfully!", "success");																														
-		
+		//$("#specialite").html(ligne);
 	}
 });

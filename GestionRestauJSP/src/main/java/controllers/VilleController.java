@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ma.entites.Serie;
+import ma.entites.Specialite;
 import ma.entites.Ville;
 import ma.metier.SerieLocal;
 import ma.metier.VilleLocal;
@@ -50,11 +51,29 @@ public class VilleController extends HttpServlet {
             	
                 
             }else if(request.getParameter("op").equals("delete")) {
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	service.delVille(id);
             	
+            	response.setContentType("application/json");
+                List<Ville> villes = service.getAllVilles();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(villes));
                 
             }else if(request.getParameter("op").equals("update")) {
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	String nom = request.getParameter("nom");               
+                Ville s=service.findById(id);
+                s.setNom(nom);
+                
+                service.updateVille(s);
+               
+               
+                response.setContentType("application/json");
+                List<Ville> villes = service.getAllVilles();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(villes));
             	
-            	
+                
                 
             }else if(request.getParameter("op").equals("searchv1")) {
             	

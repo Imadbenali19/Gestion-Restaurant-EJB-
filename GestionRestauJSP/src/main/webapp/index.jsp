@@ -33,7 +33,7 @@
 						<div class="text-center">
 							<h1 class="h4 text-gray-900 mb-4">Add an restaurant!</h1>
 						</div>
-						<form class="user">
+						<form id="form1" class="user" enctype="multipart/form-data">
 							<div class="form-group row">
 								<div class="col-sm-6 mb-3 mb-sm-0">
 									<label>nom</label> <input type="text"
@@ -47,6 +47,15 @@
 										name="description" placeholder="Description" onchange=""
 										required="required"> <span id="s2"></span>
 								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-12 mb-3 mb-sm-0">
+									<label for="adresse">Adresse</label> <input type="text"
+										class="form-control form-control-user" id="adresse"
+										name="adresse" placeholder="Adresse" onchange=""
+										required="required">
+								</div>
+
 							</div>
 							<div class="form-group row">
 								<div class="col-sm-6 mb-3 mb-sm-0">
@@ -72,22 +81,7 @@
 										class="form-control form-control-user" id="dateClose"
 										name="dateClose">
 								</div>
-								<%-- 
-								<div class="col-sm-6 mb-3 mb-sm-0">
-									<label for="salle">Salle(Code _ Type)</label> <select
-										id="salle" name="salle" class=" custom-select"
-										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
-										<%
-										SalleService sr = new SalleService();
-										for (Salle l : sr.findAll()) {
-										%>
-										<option value="<%=l.getCode() + "_" + l.getType()%>"><%=l.getCode() + "_" + l.getType()%></option>
 
-										<%
-										}
-										%> 
-									</select>
-								</div>--%>
 							</div>
 							<div class="form-group row">
 								<div class="col-sm-6 mb-3 mb-sm-0">
@@ -99,7 +93,7 @@
 									</select>
 								</div>
 								<div class="col-sm-6 mb-3 mb-sm-0">
-									<label>Rank</label> <input type="number"
+									<label for="rank">Rank</label> <input type="number"
 										class="form-control form-control-user" placeholder="Rank"
 										id="rank" name="rank">
 								</div>
@@ -116,7 +110,7 @@
 								</div>
 								<div class="col-sm-6 mb-3 mb-sm-0">
 									<label for="zone">Zone(Nom)</label> <select id="zone"
-										name="serie" class=" custom-select"
+										name="zone" class="custom-select"
 										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
 
 									</select>
@@ -124,34 +118,25 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-sm-12 mb-3 mb-sm-0">
-									<!-- <label for="specialite">Specialite(Nom)</label> <select
-										id="specialite" name="specialite" multiple
-										class=" custom-select"
-										style="border-radius: 10rem; height: calc(1.5em + .75rem + 13px);">
-										<option value="volvo">Volvo</option>
-										<option value="saab">Saab</option>
-										<option value="opel">Opel</option>
-									</select> -->
+									<label for="specialite">Specialite(Nom)</label> <select
+										id="specialite" name="specialite" class="custom-select"
+										style="border-radius: 2rem; height: calc(4.5em + .75rem + 29px);"
+										multiple>
 
-									<label> Multi-select <input mbsc-input id="my-input"
-										data-dropdown="true" data-tags="true" />
-									</label> <select id="multiple-select" multiple>
-										<option value="1">Books</option>
-										<option value="2">Movies, Music & Games</option>
-										<option value="3">Electronics & Computers</option>
-										<option value="4">Home, Garden & Tools</option>
-										<option value="5">Health & Beauty</option>
-										<option value="6">Toys, Kids & Baby</option>
-										<option value="7">Clothing & Jewelry</option>
-										<option value="8">Sports & Outdoors</option>
+
 									</select>
-<script>mobiscroll.select('#multiple-select', {
-    inputElement: document.getElementById('my-input'),
-    touchUi: false
-});</script>
 								</div>
 
 							</div>
+							<!-- <div class="form-group row">
+								<div class="col-sm-12 mb-3 mb-sm-0">
+									
+									<input type="file"
+										class="form-control form-control-user" 
+										id="image" name="image">
+								</div>
+
+							</div> -->
 
 
 							<!-- <input type="submit" class="btn btn-info btn-user btn-block" value="Add" id="add" onclick="valid()">-->
@@ -187,6 +172,7 @@
 										<tr>
 											<th>Id</th>
 											<th>Nom</th>
+											<th>Adresse</th>
 											<th>Latitude</th>
 											<th>Longitude</th>
 											<th>Description</th>
@@ -194,8 +180,13 @@
 											<th>Date de fermeture</th>
 											<th>Weekend</th>
 											<th>Rank</th>
+											<th>Serie</th>
+											<th>Zone</th>
+											<th>Specialites</th>
 											<th>Action 1</th>
 											<th>Action 2</th>
+											<th>Action 3</th>
+
 
 										</tr>
 									</thead>
@@ -203,6 +194,7 @@
 										<tr>
 											<th>Id</th>
 											<th>Nom</th>
+											<th>Adresse</th>
 											<th>Latitude</th>
 											<th>Longitude</th>
 											<th>Description</th>
@@ -210,44 +202,18 @@
 											<th>Date de fermeture</th>
 											<th>Weekend</th>
 											<th>Rank</th>
+											<th>Serie</th>
+											<th>Zone</th>
+											<th>Specialites</th>
 											<th>Action 1</th>
 											<th>Action 2</th>
+											<th>Action 3</th>
+
 
 										</tr>
 									</tfoot>
 									<tbody id="yes">
-										<%-- <%
-									 	
-										RestaurantLocal service;
-										List<Restaurant> res=service.getAllRestau();
-										int j;
-										for (Restaurant m : res) {
-										%>
-										<tr>
-											<td><%=m.getId()%></td>
-											<td><%=m.getNom()%></td>
-											<td><%=m.getLat()%></td>
-											<td><%=m.getLon()%></td>
-											<td><%=m.getDescription()%></td>
-											<td><%=m.getDate_open()%></td>
-											<td><%=m.getDate_close()%></td>
-											<td><%=m.isWeekend()%></td>
-											<td><%=m.getRank()%></td>
-											
-											<td><a
-												href="MachineController?id=<%=m.getId()%>&op=update"
-												class="btn btn-warning btn-icon-split"><span
-													class="icon text-white-50"><i
-														class="fas fa-exclamation-triangle"></i></span><span class="text">Modifier</span></a></td>
-											<td><a
-												href="MachineController?id=<%=m.getId()%>&op=delete"
-												class="btn btn-danger btn-icon-split"><span
-													class="icon text-white-50"><i class="fas fa-trash"></i></span><span
-													class="text">Supprimer</span></a></td>
-										</tr>
-										<%
-										}
-										%> --%>
+
 
 									</tbody>
 								</table>
@@ -260,6 +226,10 @@
 
 
 
+					<fieldset>
+						<legend align="center">Informations sur le restau:</legend>
+						<div id="aff" class="card shadow"></div>
+					</fieldset>
 
 
 				</div>
@@ -269,33 +239,12 @@
 		<%@ include file="/include/scriptsPath.jsp"%>
 		<%-- <script
 			src="<%=request.getContextPath()%>/validationsJS/validation3.js"></script>--%>
+		<script src="<%=request.getContextPath()%>/Scripts/getZones.js"></script>
+		<script src="<%=request.getContextPath()%>/Scripts/getSeries.js"></script>
+		<script src="<%=request.getContextPath()%>/Scripts/getSpecialites.js"></script>
 		<script src="<%=request.getContextPath()%>/Scripts/Restau.js"></script>
 
-
-
-		<!-- <script type="text/javascript">
-			$("#generate").click(function() {
-
-				//alert("Good job!", "User added successfully!", "success");
-				$.ajax({
-					url : "./GenerateReportController",
-					data : {
-						op : "machine"
-					},
-					type : 'POST',
-					success : function(data) {
-						swal("PDF generated !", {
-							icon : "success",
-						});
-						remplir(data);
-					},
-					error : function(jqXHR, textStatus, errorThrown) {
-						console.log(textStatus);
-						//swal("Error!", "User not added", "error");
-					}
-				});
-			});
-		</script> -->
+		
 </body>
 <script type="text/javascript">
 	document.getElementsByClassName('nav-item')[0].className += " active";

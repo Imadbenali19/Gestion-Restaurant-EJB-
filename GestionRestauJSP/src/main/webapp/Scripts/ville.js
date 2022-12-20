@@ -30,6 +30,94 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	$("#yes").on("click", "#delete", function() {
+		var id = $(this).closest('tr').find('td').eq(0).text();
+
+		swal({
+			title: "Are you sure?",
+			text: "Do you want to delete this record !",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+			.then((willDelete) => {
+				if (willDelete) {
+
+					$.ajax({
+						url: "VilleController",
+						data: { op: "delete", id: id },
+						type: 'POST',
+						success: function(data) {
+							swal("Ville deleted successfully !", {
+								icon: "success",
+							});
+							remplir(data);
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus);
+							swal("Error!", "Ville not deleted", "error");
+						}
+					});
+
+
+				}
+			});
+	});
+	
+	$("#yes").on("click", "#update", function() {
+
+		$("#nom").val("");
+
+
+		var id = $(this).closest('tr').find('td').eq(0).text();
+		var nom2 = $(this).closest('tr').find('td').eq(1).text();
+
+
+
+		swal({
+			title: "Are you sure?",
+			text: "Do you want to update this record !",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+
+			.then((willDelete) => {
+				if (willDelete) {
+					$("#nom").val(nom2);
+
+					$("#edit").removeAttr("hidden");
+					$("#add").hide();
+
+					$("#edit").click(function() {
+						if (($("#nom").val() != "")) {
+
+							var nom = $("#nom").val();
+
+
+							$.ajax({
+
+								url: "VilleController",
+								data: { op: "update", id: id, nom: nom },
+								type: 'POST',
+								success: function(data) {
+									swal("Ville updated successfully !", {
+										icon: "success",
+									});
+									remplir(data);
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.log(textStatus);
+									swal("Error!", "Machine not added", "error");
+								}
+							});
+						}
+					});
+				}
+			});
+	});
 
 
 });

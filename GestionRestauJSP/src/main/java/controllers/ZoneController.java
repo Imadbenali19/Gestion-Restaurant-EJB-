@@ -53,11 +53,30 @@ public class ZoneController extends HttpServlet {
             	
                 
             }else if(request.getParameter("op").equals("delete")) {
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	service.delZone(id);
             	
+            	response.setContentType("application/json");
+                List<Zone> zones = service.getAllZones();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(zones));
                 
             }else if(request.getParameter("op").equals("update")) {
-            	
-            	
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	String nom = request.getParameter("nom");
+            	String ville=request.getParameter("ville");
+            	Ville v=serviceVille.getVille(ville);
+                Zone s=service.findById(id);
+                s.setNom(nom);
+                s.setVille(v);
+                
+                service.updateZone(s);
+               
+               
+                response.setContentType("application/json");
+                List<Zone> zones = service.getAllZones();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(zones));        	
                 
             }else if(request.getParameter("op").equals("searchv1")) {
             	

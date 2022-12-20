@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import ma.entites.Serie;
 import ma.entites.Specialite;
 import ma.metier.SpecialiteLocal;
 
@@ -48,13 +49,27 @@ public class SpecialiteController extends HttpServlet {
             	
                 
             }else if(request.getParameter("op").equals("delete")) {
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	service.delSpecialite(id);
             	
+            	response.setContentType("application/json");
+                List<Specialite> specialites = service.getAllSpecialites();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(specialites));
                 
             }else if(request.getParameter("op").equals("update")) {
-            	
-            	
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	String nom = request.getParameter("nom");               
+                Specialite s=service.findById(id);
+                s.setNom(nom);
                 
-            }else if(request.getParameter("op").equals("searchv1")) {
+                service.updateSpecialite(s);
+               
+               
+                response.setContentType("application/json");
+                List<Specialite> specialites = service.getAllSpecialites();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(specialites));
             	
                 
                 

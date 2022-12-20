@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import ma.entites.Photo;
 import ma.entites.Restaurant;
 import ma.entites.Serie;
 import ma.entites.Specialite;
@@ -33,8 +34,11 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 
 	@Override
 	public boolean delRestau(Long rId) {
+//		Query query = em.createNativeQuery("delete from restaurant_specialite r where r.restaurant_id=?1");
+//		query.setParameter(1, rId);
+//		query.executeUpdate();
 		em.remove(em.find(Restaurant.class, rId));
-		return false;
+		return true;
 	}
 
 	@Override
@@ -43,7 +47,16 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		if(ru!=null) {
 			ru.setLat(r.getLat());
 			ru.setLon(r.getLon());
-			ru.setAdress(r.getAdress());
+			ru.setAdresse(r.getAdresse());
+			ru.setDate_close(r.getDate_close());
+			ru.setDate_open(r.getDate_open());
+			ru.setWeekend(r.isWeekend());
+			ru.setDescription(r.getDescription());
+			ru.setNom(r.getNom());
+			ru.setRank(r.getRank());
+			ru.setZone(r.getZone());
+			ru.setSerie(r.getSerie());
+			ru.setSpecialites(r.getSpecialites());
 			return true;
 		}
 		return false;
@@ -62,11 +75,7 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		return (Restaurant) query.getSingleResult();
 	}
 
-	@Override
-	public boolean addPhotoToRestau(Long rId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	@Override
 	public boolean delPhotoFromRestau(Long rId, Long pId) {
@@ -80,6 +89,21 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 	public List<Zone> getRestausInZone(Long zId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Restaurant findById(Long id) {
+		Restaurant cm = em.find(Restaurant.class, id);
+		if (cm == null)
+			throw new RuntimeException("Restau introvable");
+		return cm;
+	}
+
+	@Override
+	public boolean addPhotoToRestau(Long rId, List<Photo> photos) {
+		Restaurant ru=em.find(Restaurant.class,rId);
+		//ru.setPhotos(photos);
+		return true;
 	}
 
 	

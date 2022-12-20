@@ -2,9 +2,11 @@ package ma.metier;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
+import ma.entites.Restaurant;
 import ma.entites.Ville;
 import ma.entites.Zone;
 
@@ -14,6 +16,9 @@ public class ZoneEJBRemote implements ZoneLocal,ZoneRemote {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@EJB
+	private RestaurantLocal service;
+	
 	@Override
 	public boolean addZone(Zone z) {
 		em.persist(z);
@@ -22,8 +27,14 @@ public class ZoneEJBRemote implements ZoneLocal,ZoneRemote {
 
 	@Override
 	public boolean delZone(Long zId) {
+		List<Restaurant> r=service.getAllRestau();
+		for(Restaurant x: r) {
+			if(x.getZone().getId()==zId) {
+				x.setSerie(null);
+			}
+		}
 		em.remove(em.find(Zone.class, zId));
-		return false;
+		return true;
 	}
 
 	@Override
@@ -48,6 +59,14 @@ public class ZoneEJBRemote implements ZoneLocal,ZoneRemote {
 		Query query = em.createQuery("select z from Zone z where z.nom=?1",Zone.class);
 		query.setParameter(1, nom);
 		return (Zone) query.getSingleResult();
+	}
+
+	@Override
+	public Zone findById(Long id) {
+		Zone cm = em.find(Zone.class, id);
+		if (cm == null)
+			throw new RuntimeException("Zone introvable");
+		return cm;
 	}
 
 	

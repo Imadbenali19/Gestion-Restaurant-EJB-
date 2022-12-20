@@ -19,4 +19,6 @@ public interface SpecialiteRemote {
 	List<Specialite> getAllSpecialites();
 
 	Specialite getSpecialite(String nom);
+	
+	Specialite findById(Long id);
 }

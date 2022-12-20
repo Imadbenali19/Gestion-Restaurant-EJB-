@@ -2,18 +2,24 @@ package ma.metier;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import ma.entites.Restaurant;
 import ma.entites.Ville;
+import ma.entites.Zone;
 
 @Stateless(name = "ville")
 public class VilleEJBImpl implements VilleLocal, VilleRemote {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private ZoneLocal service;
 
 	@Override
 	public boolean addVille(Ville s) {
@@ -23,8 +29,14 @@ public class VilleEJBImpl implements VilleLocal, VilleRemote {
 
 	@Override
 	public boolean delVille(Long sId) {
+		List<Zone> r=service.getAllZones();
+		for(Zone x: r) {
+			if(x.getVille().getId()==sId) {
+				x.setVille(null);
+			}
+		}
 		em.remove(em.find(Ville.class, sId));
-		return false;
+		return true;
 	}
 
 	@Override
@@ -59,6 +71,14 @@ public class VilleEJBImpl implements VilleLocal, VilleRemote {
 		Query query = em.createQuery("select v from Ville v where v.nom=?1",Ville.class);
 		query.setParameter(1, nom);
 		return (Ville) query.getSingleResult();
+	}
+
+	@Override
+	public Ville findById(Long id) {
+		Ville cm = em.find(Ville.class, id);
+		if (cm == null)
+			throw new RuntimeException("Ville introvable");
+		return cm;
 	}
 
 }

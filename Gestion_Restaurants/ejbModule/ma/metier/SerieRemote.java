@@ -20,4 +20,6 @@ public interface SerieRemote {
 	List<Serie> getAllSeries();
 
 	Serie getSerie(String nom);
+	
+	Serie findById(Long id);
 }

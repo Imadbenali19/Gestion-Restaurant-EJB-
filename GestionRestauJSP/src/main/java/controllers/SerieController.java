@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import ma.entites.Restaurant;
 import ma.entites.Serie;
 import ma.metier.RestaurantLocal;
 import ma.metier.SerieLocal;
@@ -52,10 +53,27 @@ public class SerieController extends HttpServlet {
             	
                 
             }else if(request.getParameter("op").equals("delete")) {
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	service.delSerie(id);
             	
+            	response.setContentType("application/json");
+                List<Serie> series = service.getAllSeries();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(series));
                 
             }else if(request.getParameter("op").equals("update")) {
-            	
+            	Long id=Long.parseLong(request.getParameter("id"));
+            	String nom = request.getParameter("nom");               
+                Serie s=service.findById(id);
+                s.setNom(nom);
+                
+                service.updateSerie(s);
+               
+               
+                response.setContentType("application/json");
+                List<Serie> series = service.getAllSeries();
+                Gson json = new Gson();
+                response.getWriter().write(json.toJson(series));
             	
                 
             }else if(request.getParameter("op").equals("searchv1")) {

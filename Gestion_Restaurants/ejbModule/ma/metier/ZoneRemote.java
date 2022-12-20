@@ -19,4 +19,6 @@ public interface ZoneRemote {
 	List<Zone> getAllZones();
 	
 	Zone getZone(String nom);
+	
+	Zone findById(Long id);
 }

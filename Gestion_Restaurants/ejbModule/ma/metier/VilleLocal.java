@@ -18,6 +18,7 @@ public interface VilleLocal {
 
 	List<Ville> getAllVilles();
 
-	//Ville getVille(Long id);
 	Ville getVille(String nom);
+	
+	Ville findById(Long id);
 }
