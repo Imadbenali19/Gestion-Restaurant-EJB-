@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -21,44 +22,48 @@ import ma.metier.SerieLocal;
 @Path("/serie")
 @Stateless
 public class SerieController {
-      @EJB
-      private SerieLocal service;
-      
-      
-    @POST
-  	@Path("/add")
-  	@Produces(MediaType.APPLICATION_JSON)
-    public void addSerie(@FormParam(value = "nom") String nom) {
-    	Serie s =new Serie();
-    	s.setNom(nom);
-    	service.addSerie(s);
-    }
-    @GET
+	@EJB
+	private SerieLocal service;
+
+	@POST
+	@Path("/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void addSerie(Serie s) {
+		service.addSerie(s);
+	}
+
+	@GET
 	@Path("/find/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Serie getSerie(@PathParam(value = "id") long id) {
 		return service.findById(id);
 	}
-    
-    @GET
+
+	@GET
 	@Path("/findAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Serie> listSeries() {
 		return service.getAllSeries();
 	}
-    @DELETE
-	@Path("/delete")
+
+	@DELETE
+	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void delete(@FormParam(value = "id") Long c1) {
+	public void delete(@PathParam(value = "id") Long c1) {
 		service.delSerie(c1);
 	}
-    @PUT
+
+	@PUT
 	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    public void updateSerie(@FormParam(value = "nom") String nom, @FormParam(value = "id") long id) {
-    	Serie s= service.findById(id);
-    	s.setNom(nom);
-    	service.updateSerie(s);
-    }
-      
+	public void updateSerie(Serie ser) {
+		Serie s = service.findById(ser.getId());
+		if(s!=null) {
+			s.setNom(ser.getNom());
+			service.updateSerie(s);
+		}
+	}
+
 }

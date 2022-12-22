@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -27,43 +28,47 @@ public class ZoneController {
 	private ZoneLocal service;
 	@EJB
 	private VilleLocal vs;
+
 	@POST
 	@Path("/add")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void addZone(@FormParam(value = "nom") String nom, @FormParam(value = "idV") long idV) {
-		Zone z = new Zone();
-		z.setNom(nom);
-		Ville v= vs.findById(idV);
-		z.setVille(v);
+	public void addZone(Zone z) {
 		service.addZone(z);
 	}
+
 	@GET
 	@Path("/find/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Zone getZone(@PathParam(value = "id") long id) {
 		return service.findById(id);
 	}
+
 	@GET
 	@Path("/findAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Zone> listSpecialite() {
 		return service.getAllZones();
 	}
-	
+
 	@DELETE
-	@Path("/delete")
+	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void delete(@FormParam(value = "id") Long c1) {
+	public void delete(@PathParam(value = "id") Long c1) {
 		service.delZone(c1);
 	}
+
 	@PUT
 	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void update(@FormParam(value = "nom") String nom, @FormParam(value = "id") long id,@FormParam(value = "idZ") long idZ) {
-		Zone z = service.findById(id);
-		z.setNom(nom);
-		Ville v= vs.findById(idZ);
-		z.setVille(v);
-		service.updateZone(z);
+	public void update(Zone zn) {
+		Zone z = service.findById(zn.getId());
+		if (z != null) {
+			z.setNom(zn.getNom());
+			z.setVille(zn.getVille());
+			service.updateZone(z);
+		}
+
 	}
 }

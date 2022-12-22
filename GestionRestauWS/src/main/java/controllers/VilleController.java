@@ -26,22 +26,21 @@ import ma.metier.VilleLocal;
 public class VilleController {
 	@EJB
 	private VilleLocal service;
-/*
-	@POST
-	@Path("/add")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void addVille(@FormParam(value = "nom") String nom) {
-		Ville v = new Ville();
-		v.setNom(nom);
-		service.addVille(v);
-	}
-	*/
+
+	/*
+	 * @POST
+	 * 
+	 * @Path("/add")
+	 * 
+	 * @Produces(MediaType.APPLICATION_JSON) public void addVille(@FormParam(value =
+	 * "nom") String nom) { Ville v = new Ville(); v.setNom(nom);
+	 * service.addVille(v); }
+	 */
 	@POST
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void addVille(Ville v) {
-		
 		service.addVille(v);
 	}
 
@@ -60,18 +59,22 @@ public class VilleController {
 	}
 
 	@DELETE
-	@Path("/delete")
+	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void delete(@FormParam(value = "id") Long c1) {
+	public void delete(@PathParam(value = "id") Long c1) {
 		service.delVille(c1);
 	}
 
 	@PUT
 	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void update(@FormParam(value = "nom") String nom, @FormParam(value = "id") long id) {
-		Ville s = service.findById(id);
-		s.setNom(nom);
-		service.updateVille(s);
+	public void update(Ville vil) {
+		Ville s = service.findById(vil.getId());
+		if (s != null) {
+			s.setNom(vil.getNom());
+			service.updateVille(s);
+		}
+
 	}
 }

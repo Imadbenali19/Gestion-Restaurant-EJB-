@@ -69,10 +69,10 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 	}
 
 	@Override
-	public Restaurant getRestau(String nom) {
-		Query query = em.createQuery("select r from Restaurant r where r.nom=?1",Restaurant.class);
-		query.setParameter(1, nom);
-		return (Restaurant) query.getSingleResult();
+	public List<Restaurant> getRestau(String nom) {
+		Query query = em.createQuery("select r from Restaurant r where r.nom like :nom",Restaurant.class);
+		query.setParameter("nom","%"+nom+"%");
+		return query.getResultList();
 	}
 
 	
@@ -108,7 +108,7 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 	
 	@Override
 	public List<Restaurant> getRestausInZone(String nom) {
-		Query query = em.createQuery("select r from Restaurant r, Zone z where r.zone.nom=?1",Restaurant.class);
+		Query query = em.createQuery("select r from Restaurant r where r.zone.nom like ?1",Restaurant.class);
 		query.setParameter(1, nom);
 		return (List<Restaurant>) query.getResultList();
 		
@@ -116,7 +116,7 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 
 	@Override
 	public List<Restaurant> getRestauInVille(String nom) {
-		Query query = em.createQuery("select r from Restaurant r, Zone z, Ville v where r.zone.ville.nom=?1",Restaurant.class);
+		Query query = em.createQuery("select r from Restaurant r where r.zone.ville.nom like ?1",Restaurant.class);
 		query.setParameter(1, nom);
 		return (List<Restaurant>) query.getResultList();
 	

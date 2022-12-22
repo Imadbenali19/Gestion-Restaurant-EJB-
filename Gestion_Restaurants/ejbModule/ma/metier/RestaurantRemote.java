@@ -25,7 +25,7 @@ public interface RestaurantRemote {
 
 	List<Restaurant> getAllRestau();
 
-	Restaurant getRestau(String nom);
+	List<Restaurant> getRestau(String nom);
 	
 	Restaurant findById(Long id);
 

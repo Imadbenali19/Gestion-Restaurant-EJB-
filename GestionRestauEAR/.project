@@ -5,6 +5,7 @@
 	<projects>
 		<project>Gestion_Restaurants</project>
 		<project>GestionRestauJSP</project>
+		<project>GestionRestauWS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
