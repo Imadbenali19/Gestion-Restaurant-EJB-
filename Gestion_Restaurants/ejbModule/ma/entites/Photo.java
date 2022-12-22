@@ -2,11 +2,12 @@ package ma.entites;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Photo  implements Serializable{
@@ -17,13 +18,17 @@ public class Photo  implements Serializable{
 	private Long id;
 	private String url;
 	
+	@ManyToOne
+	private Restaurant restaurant;
 	
 	
-	public Photo(String url) {
+	
+	public Photo(String url, Restaurant restaurant) {
 		super();
 		this.url = url;
+		this.restaurant = restaurant;
 	}
-	
+
 	public Photo() {
 		super();
 	}
@@ -40,6 +45,15 @@ public class Photo  implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+	
 	
 	
 	

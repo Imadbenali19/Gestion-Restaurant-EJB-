@@ -105,6 +105,22 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		//ru.setPhotos(photos);
 		return true;
 	}
+	
+	@Override
+	public List<Restaurant> getRestausInZone(String nom) {
+		Query query = em.createQuery("select r from Restaurant r, Zone z where r.zone.nom=?1",Restaurant.class);
+		query.setParameter(1, nom);
+		return (List<Restaurant>) query.getResultList();
+		
+	}
+
+	@Override
+	public List<Restaurant> getRestauInVille(String nom) {
+		Query query = em.createQuery("select r from Restaurant r, Zone z, Ville v where r.zone.ville.nom=?1",Restaurant.class);
+		query.setParameter(1, nom);
+		return (List<Restaurant>) query.getResultList();
+	
+	}
 
 	
 }

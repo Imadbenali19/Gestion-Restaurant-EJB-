@@ -197,8 +197,7 @@ public class RestauController extends HttpServlet {
 
 			// }
 
-			service.addRestau(new Restaurant(nom, adresse, lat, lon, description, dateOpen, dateClose, w, rank, null, z,
-					specialites, s));
+			service.addRestau(new Restaurant(nom, adresse, lat, lon, description, dateOpen, dateClose, w, rank, z,specialites, s));
 
 			// ms.create(new Machine(reference,marque, new
 			// Date(sdf.parse(dateAchat).getTime()),salle, prix));

@@ -31,13 +31,10 @@ public class Restaurant implements Serializable {
 	private boolean weekend;
 	private int rank;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Photo> photos;
-	
 	@ManyToOne
 	private Zone zone;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Specialite> specialites;
 	
 	@ManyToOne
@@ -50,7 +47,7 @@ public class Restaurant implements Serializable {
 	}
 
 	public Restaurant(String nom, String adresse, double lat, double lon, String description, String date_open,
-			String date_close, boolean weekend, int rank, List<Photo> photos, Zone zone, List<Specialite> specialites,
+			String date_close, boolean weekend, int rank, Zone zone, List<Specialite> specialites,
 			Serie serie) {
 		super();
 		this.nom=nom;
@@ -62,18 +59,9 @@ public class Restaurant implements Serializable {
 		this.date_close = date_close;
 		this.weekend = weekend;
 		this.rank = rank;
-		this.photos = photos;
 		this.zone = zone;
 		this.specialites = specialites;
 		this.serie = serie;
-	}
-
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
 	}
 
 	public Zone getZone() {

@@ -32,6 +32,9 @@ public interface RestaurantLocal {
 	boolean addPhotoToRestau(Long rId,List<Photo> photos);
 
 	boolean delPhotoFromRestau(Long rId, Long pId);
+	
+	List<Restaurant> getRestausInZone(String nom);
+	List<Restaurant> getRestauInVille(String nom);
 
 	
 
