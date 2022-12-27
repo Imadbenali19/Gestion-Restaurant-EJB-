@@ -74,15 +74,6 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		query.setParameter("nom","%"+nom+"%");
 		return query.getResultList();
 	}
-
-	
-
-	@Override
-	public boolean delPhotoFromRestau(Long rId, Long pId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	
 
 	@Override
@@ -97,13 +88,6 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		if (cm == null)
 			throw new RuntimeException("Restau introvable");
 		return cm;
-	}
-
-	@Override
-	public boolean addPhotoToRestau(Long rId, List<Photo> photos) {
-		Restaurant ru=em.find(Restaurant.class,rId);
-		//ru.setPhotos(photos);
-		return true;
 	}
 	
 	@Override
@@ -120,6 +104,13 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 		query.setParameter(1, nom);
 		return (List<Restaurant>) query.getResultList();
 	
+	}
+
+	@Override
+	public List<Photo> getPhotoOfRestau(Long rId) {
+		Query query = em.createQuery("select p from Restaurant r,Photo p where p.restaurant.id=?1");
+		query.setParameter(1, rId);
+		return (List<Photo>) query.getResultList();
 	}
 
 	

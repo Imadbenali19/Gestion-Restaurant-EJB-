@@ -16,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ma.entites.Photo;
 import ma.entites.Restaurant;
 import ma.entites.Serie;
 import ma.entites.Ville;
@@ -140,5 +141,12 @@ public class RestauController {
 			r.setDescription(res.getDescription());
 			service.updateRestau(r);
 		}
+	}
+	
+	@GET
+	@Path("/getPhotos/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Photo> getPhotos(@PathParam(value = "id") Long id) {
+		return service.getPhotoOfRestau(id);
 	}
 }

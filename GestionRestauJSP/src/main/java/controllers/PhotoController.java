@@ -1,39 +1,34 @@
 package controllers;
 
-
+import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.mail.MessagingException;
-import javax.mail.Part;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 
-import ma.metier.RestaurantLocal;
+import com.google.gson.Gson;
+
+import ma.entites.Photo;
+import ma.entites.Restaurant;
+import ma.metier.PhotoLocal;
 
 /**
- * Servlet implementation class FileUploadController
+ * Servlet implementation class PhotoController
  */
-@WebServlet("/FileUploadController")
-@MultipartConfig
-public class FileUploadController extends HttpServlet {
+@WebServlet("/PhotoController")
+public class PhotoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	@EJB
+	private PhotoLocal service;
     /**
      * @see HttpServlet#HttpServlet()
      */
-	private String UPLOAD_DIRECTORY = "D:\\up";
-	
-	@EJB
-	private RestaurantLocal service;
-	
-	
-    public FileUploadController() {
+    public PhotoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,24 +47,14 @@ public class FileUploadController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		//UPLOAD_DIRECTORY = getServletContext().getRealPath("/").replace("build\\", "") + "ressource" + File.separator + "images";
 		
-		/* Receive file uploaded to the Servlet from the HTML5 form */
-		Part filePart=(Part) request.getPart("file");
-	    //Part filePart = request.getPart("file");
-		
-	    String fileName="";
-		try {
-			fileName = filePart.getFileName();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (request.getParameter("op").equals("load")) {
+			response.setContentType("application/json");
+			List<Photo> photos = service.getAllPhotos();
+			Gson json = new Gson();
+			response.getWriter().write(json.toJson(photos));
+
 		}
-	    for (javax.servlet.http.Part part : request.getParts()) {
-	      part.write("D:/up/" + fileName);
-	    }
-	    response.getWriter().print("The file uploaded sucessfully.");
-    
 	}
 
 }

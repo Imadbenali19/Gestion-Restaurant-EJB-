@@ -74,19 +74,7 @@ $(document).ready(function() {
 		});
 
 	});
-
-	$("#yes").on("click", "#upload", function() {
-		console.log("yep");
-		let formData = new FormData();
-		formData.append("file", ajaxfile.files);
-		fetch('FileUploadController', {
-			method: "POST",
-			body: formData
-		});
-		alert('The file upload with Ajax and Java was a success!');
-
-	});
-
+	
 	$("#yes").on("click", "#delete", function() {
 		var id = $(this).closest('tr').find('td').eq(0).text();
 
@@ -230,7 +218,7 @@ $(document).ready(function() {
 function remplir(data) {
 	var ligne = "";
 	data.forEach(e => {
-		ligne += "<tr id='row'><td>" + e.id + "</td><td>" + e.nom + "</td><td>" + e.adresse + "</td><td>" + e.lat + "</td><td>" + e.lon + "</td><td>" + e.description + "</td><td>" + e.date_open + "</td><td>" + e.date_close + "</td><td>" + e.weekend + "</td><td>" + e.rank + "</td><td>" + e.serie?.nom + "</td><td>" + e.zone?.nom + "</td><td>" + JSON.stringify(e.specialites) + "</td><td><bouton class='btn btn-warning btn-icon-split' id='update' val=" + e.id + "><span class='icon text-white-50'><i class='fas fa-exclamation-triangle'></i></span><span class='text'>Modifier</span></bouton></td><td><bouton class='btn btn-danger btn-icon-split' id='delete' val=" + e.id + "><span class='icon text-white-50'><i class='fas fa-trash'></i></span><span class='text'>Supprimer</span></bouton></td><td><input type='file' id='ajaxfile'><button id='upload'>upload</button></td></tr>";
+		ligne += "<tr id='row'><td>" + e.id + "</td><td>" + e.nom + "</td><td>" + e.adresse + "</td><td>" + e.lat + "</td><td>" + e.lon + "</td><td>" + e.description + "</td><td>" + e.date_open + "</td><td>" + e.date_close + "</td><td>" + e.weekend + "</td><td>" + e.rank + "</td><td>" + e.serie?.nom + "</td><td>" + e.zone?.nom + "</td><td>" + JSON.stringify(e.specialites) + "</td><td><bouton class='btn btn-warning btn-icon-split' id='update' val=" + e.id + "><span class='icon text-white-50'><i class='fas fa-exclamation-triangle'></i></span><span class='text'>Modifier</span></bouton></td><td><button class='btn btn-danger btn-icon-split' id='delete' val=" + e.id + "><span class='icon text-white-50'><i class='fas fa-trash'></i></span><span class='text'>Supprimer</span></button></td><td><form action='upload' method='post' enctype='multipart/form-data'><input type='text' name='Nom' value=" + e.id + " ><input type='file' name='file'><input type='submit' value='upload' /></form></td></tr>";
 	});
 	//alert(ligne);		
 	//swal("Good job!", "User added successfully!", "success");																														

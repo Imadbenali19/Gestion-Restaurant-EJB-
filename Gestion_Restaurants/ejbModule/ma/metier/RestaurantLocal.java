@@ -29,9 +29,11 @@ public interface RestaurantLocal {
 	
 	Restaurant findById(Long id);
 
-	boolean addPhotoToRestau(Long rId,List<Photo> photos);
+	/*boolean addPhotoToRestau(Long rId,List<Photo> photos);
 
-	boolean delPhotoFromRestau(Long rId, Long pId);
+	boolean delPhotoFromRestau(Long rId, Long pId);*/
+	
+	List<Photo> getPhotoOfRestau(Long rId);
 	
 	List<Restaurant> getRestausInZone(String nom);
 	List<Restaurant> getRestauInVille(String nom);

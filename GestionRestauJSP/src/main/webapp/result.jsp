@@ -10,5 +10,12 @@
 	<div id="result">
 		<h3>${requestScope["message"]}</h3>
 	</div>
+	
+	<div id="oh">
+	</div>
+	
+	<%@ include file="/include/scriptsPath.jsp"%>
+		
+		<script src="<%=request.getContextPath()%>/Scripts/getPhotos.js"></script>
 </body>
 </html>
