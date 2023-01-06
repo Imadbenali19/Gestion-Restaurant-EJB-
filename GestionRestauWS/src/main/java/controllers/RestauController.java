@@ -144,6 +144,13 @@ public class RestauController {
 	}
 	
 	@GET
+	@Path("/search/{ville}/{zone}/{spec}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Restaurant> searchRestaurants(@PathParam(value = "ville") String ville,@PathParam(value = "zone") String zone,@PathParam(value = "spec") String spec) {
+		return service.searchRestaux(ville, zone, spec);
+	}
+	
+	@GET
 	@Path("/getPhotos/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Photo> getPhotos(@PathParam(value = "id") Long id) {

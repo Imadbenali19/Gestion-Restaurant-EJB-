@@ -37,7 +37,7 @@ public class Restaurant implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Specialite> specialites;
 	
-	@ManyToOne
+	@ManyToOne 
 	private Serie serie;
 	
 	

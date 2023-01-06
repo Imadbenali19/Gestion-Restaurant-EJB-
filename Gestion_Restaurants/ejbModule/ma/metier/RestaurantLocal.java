@@ -38,6 +38,7 @@ public interface RestaurantLocal {
 	List<Restaurant> getRestausInZone(String nom);
 	List<Restaurant> getRestauInVille(String nom);
 
+	List<Restaurant> searchRestaux(String ville, String zone, String specialite);
 	
 
 	/////

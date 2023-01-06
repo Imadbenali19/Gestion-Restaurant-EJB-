@@ -17,15 +17,17 @@ public class Photo  implements Serializable{
 	
 	private Long id;
 	private String url;
+	private String webUrl;
 	
 	@ManyToOne
 	private Restaurant restaurant;
 	
 	
 	
-	public Photo(String url, Restaurant restaurant) {
+	public Photo(String url,String webUrl ,Restaurant restaurant) {
 		super();
 		this.url = url;
+		this.webUrl=webUrl;
 		this.restaurant = restaurant;
 	}
 
@@ -52,6 +54,14 @@ public class Photo  implements Serializable{
 
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
+	}
+
+	public String getWebUrl() {
+		return webUrl;
+	}
+
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
 	}
 	
 	

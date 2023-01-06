@@ -61,9 +61,11 @@ public class FileUploadHandler extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// doGet(request, response);
-		String name = null;
+		String name = "";
 		String id = null;
-		UPLOAD_DIRECTORY=getServletContext().getRealPath("/").replace("build\\", "") + "/ressource" + File.separator + "/images";
+		String webUrl=null;
+		//UPLOAD_DIRECTORY=getServletContext().getRealPath("/").replace("build\\", "") + "/ressource" + File.separator + "/images";
+		UPLOAD_DIRECTORY="D:/Mes Documents/EMSI/CY.ING.INF/5IIR/Architecture Composants d'entreprise/Projet EJB WEB/FrontEnd/public/images";
 		
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
@@ -80,15 +82,21 @@ public class FileUploadHandler extends HttpServlet {
 							input.read(str);
 							id = new String(str, "UTF8");
 						}
+						if (item.getFieldName().equals("webUrl")) {
+                            byte[] str = new byte[input.available()];
+                            input.read(str);
+                            webUrl = new String(str, "UTF8");
+                        }
+
 					}
 				}
 				// Long id=Long.parseLong(request.getParameter("id"));
 				Long idR=Long.parseLong(id);
 				Restaurant r= serviceRestau.findById(idR);
-				service.uploadPhoto(new Photo(name, r));
+				service.uploadPhoto(new Photo(name,webUrl, r));
 
 				// File uploaded successfully
-				request.setAttribute("message", "File Uploaded Successfully" + idR);
+				request.setAttribute("message", "File Uploaded Successfully" + UPLOAD_DIRECTORY);
 
 			} catch (Exception ex) {
 				request.setAttribute("message", "File Upload Failed due to " + ex);

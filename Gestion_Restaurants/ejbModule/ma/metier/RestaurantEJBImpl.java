@@ -2,6 +2,7 @@ package ma.metier;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,9 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@EJB
+	PhotoLocal service;
+	
 	@Override
 	public String getHello() {
 		// TODO Auto-generated method stub
@@ -37,6 +41,12 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 //		Query query = em.createNativeQuery("delete from restaurant_specialite r where r.restaurant_id=?1");
 //		query.setParameter(1, rId);
 //		query.executeUpdate();
+		List<Photo> r=service.getAllPhotos();
+		for(Photo x: r) {
+			if(x.getRestaurant().getId()==rId) {
+				service.delPhoto(x.getId());
+			}
+		}
 		em.remove(em.find(Restaurant.class, rId));
 		return true;
 	}
@@ -108,9 +118,25 @@ public class RestaurantEJBImpl implements RestaurantLocal, RestaurantRemote {
 
 	@Override
 	public List<Photo> getPhotoOfRestau(Long rId) {
-		Query query = em.createQuery("select p from Restaurant r,Photo p where p.restaurant.id=?1");
+		Query query = em.createQuery("select p from Photo p where p.restaurant.id=?1");
 		query.setParameter(1, rId);
 		return (List<Photo>) query.getResultList();
+	}
+	
+	public Specialite getSpecialiteByNom(String nom) {
+		Query query = em.createQuery("select s from Specialite s where s.nom like ?1",Specialite.class);
+		query.setParameter(1, nom);
+		return (Specialite) query.getSingleResult();
+	}
+	
+	@Override
+	public List<Restaurant> searchRestaux(String ville, String zone, String specialite) {
+		Specialite s = getSpecialiteByNom(specialite);
+		Query query = em.createQuery("select r from Restaurant r where r.zone.ville.nom like concat('%', ?1, '%') AND r.zone.nom like concat('%', ?2, '%') AND ?3 in elements(r.specialites)",Restaurant.class);
+		query.setParameter(1, ville);
+		query.setParameter(2, zone);
+		query.setParameter(3, s);
+		return (List<Restaurant>) query.getResultList();
 	}
 
 	

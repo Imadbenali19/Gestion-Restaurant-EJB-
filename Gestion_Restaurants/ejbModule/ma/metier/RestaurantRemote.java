@@ -37,6 +37,7 @@ public interface RestaurantRemote {
 
 	
 
+	List<Restaurant> searchRestaux(String ville, String zone, String specialite);
 	
 	////
 	List<Restaurant> getRestausInZone(String nom);
